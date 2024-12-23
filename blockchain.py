@@ -2,12 +2,12 @@ import time
 import hashlib
 
 
-# Хеширование с использованием SHA-256
+#hash with use SHA-256
 def hash(text):
     return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
 
-# Класс для транзакции
+
 class Transaction:
     def __init__(self, sender, receiver, amount):
         self.sender = sender
@@ -18,7 +18,7 @@ class Transaction:
         return f"{self.sender} -> {self.receiver}: {self.amount}"
 
 
-# Класс для блока
+
 class Block:
     def __init__(self, previous_hash, transactions):
         self.previous_hash = previous_hash
@@ -28,7 +28,7 @@ class Block:
         self.hash = self.calculate_block_hash()
 
     def calculate_merkle_root(self, transactions):
-        # Хешируем транзакции и строим Меркле-дерево
+        # hashing and mercle-tree
         transaction_hashes = [hash(str(tx)) for tx in transactions]
         while len(transaction_hashes) > 1:
             transaction_hashes = [hash(transaction_hashes[i] + transaction_hashes[i + 1])
@@ -39,7 +39,7 @@ class Block:
         return hash(str(self.previous_hash) + str(self.timestamp) + str(self.merkle_root))
 
 
-# Класс для блокчейна
+
 class Blockchain:
     def __init__(self):
         self.chain = []
@@ -65,19 +65,19 @@ class Blockchain:
         self.pending_transactions.append(transaction)
 
 
-# Пример добавления транзакции и майнинга блока
+
 def demo():
     blockchain = Blockchain()
 
-    # Добавление транзакций
+    # transaction
     blockchain.add_transaction(Transaction("Alice", "Bob", 50))
     blockchain.add_transaction(Transaction("Bob", "Charlie", 20))
     blockchain.add_transaction(Transaction("Charlie", "David", 10))
 
-    # Майннинг блока
+
     blockchain.mine_block()
 
-    # Вывод блоков и валидация блокчейна
+    # out of blocks and validation of blockchain
     for block in blockchain.chain:
         print(f"Block Hash: {block.hash}")
         print(f"Merkle Root: {block.merkle_root}")
